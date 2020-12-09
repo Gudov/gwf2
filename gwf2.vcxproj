@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{0034B487-B577-4565-AA72-1DFFBCDE2148}</ProjectGuid>
+    <RootNamespace>gwf2</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>E:\warframe\lua;E:\warframe\gwf2\ImGui;E:\warframe\gwf2\MinHook\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\warframe\gwf2\MinHook\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>E:\warframe\lua;E:\warframe\gwf2\ImGui;E:\warframe\gwf2\MinHook\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\warframe\gwf2\MinHook\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>E:\warframe\lua;E:\warframe\gwf2\ImGui;E:\warframe\gwf2\MinHook\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\warframe\gwf2\MinHook\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\src\warframe\lua;C:\src\warframe\gwf2\ImGui;C:\src\warframe\gwf2\MinHook\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\src\warframe\gwf2\MinHook\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libMinHook-x64-v140-mdd.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;imm32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\lua\lua\lapi.c" />
+    <ClCompile Include="..\lua\lua\lauxlib.c" />
+    <ClCompile Include="..\lua\lua\lbaselib.c" />
+    <ClCompile Include="..\lua\lua\lcode.c" />
+    <ClCompile Include="..\lua\lua\ldblib.c" />
+    <ClCompile Include="..\lua\lua\ldebug.c" />
+    <ClCompile Include="..\lua\lua\ldo.c" />
+    <ClCompile Include="..\lua\lua\ldump.c" />
+    <ClCompile Include="..\lua\lua\lfunc.c" />
+    <ClCompile Include="..\lua\lua\lgc.c" />
+    <ClCompile Include="..\lua\lua\linit.c" />
+    <ClCompile Include="..\lua\lua\liolib.c" />
+    <ClCompile Include="..\lua\lua\llex.c" />
+    <ClCompile Include="..\lua\lua\lmathlib.c" />
+    <ClCompile Include="..\lua\lua\lmem.c" />
+    <ClCompile Include="..\lua\lua\loadlib.c" />
+    <ClCompile Include="..\lua\lua\lobject.c" />
+    <ClCompile Include="..\lua\lua\lopcodes.c" />
+    <ClCompile Include="..\lua\lua\loslib.c" />
+    <ClCompile Include="..\lua\lua\lparser.c" />
+    <ClCompile Include="..\lua\lua\lstate.c" />
+    <ClCompile Include="..\lua\lua\lstring.c" />
+    <ClCompile Include="..\lua\lua\lstrlib.c" />
+    <ClCompile Include="..\lua\lua\ltable.c" />
+    <ClCompile Include="..\lua\lua\ltablib.c" />
+    <ClCompile Include="..\lua\lua\ltm.c" />
+    <ClCompile Include="..\lua\lua\lua.c" />
+    <ClCompile Include="..\lua\lua\luac.c" />
+    <ClCompile Include="..\lua\lua\lundump.c" />
+    <ClCompile Include="..\lua\lua\lvm.c" />
+    <ClCompile Include="..\lua\lua\lwops.c" />
+    <ClCompile Include="..\lua\lua\lzio.c" />
+    <ClCompile Include="..\lua\lua\print.c" />
+    <ClCompile Include="console.cpp" />
+    <ClCompile Include="d3d11hook.cpp" />
+    <ClCompile Include="dump.cpp" />
+    <ClCompile Include="dumpWindow.cpp" />
+    <ClCompile Include="hookManager.cpp" />
+    <ClCompile Include="hud.cpp" />
+    <ClCompile Include="ImGui\imgui.cpp" />
+    <ClCompile Include="ImGui\imgui_demo.cpp" />
+    <ClCompile Include="ImGui\imgui_draw.cpp" />
+    <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="imgui_imp_dx11.cpp" />
+    <ClCompile Include="InputHook.cpp" />
+    <ClCompile Include="luaHooks.cpp" />
+    <ClCompile Include="luaImplAssist.cpp" />
+    <ClCompile Include="luaInit.cpp" />
+    <ClCompile Include="luaLoader.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
+    <ClCompile Include="warframeHook.cpp" />
+    <ClCompile Include="winUtils.cpp" />
+    <ClCompile Include="win_imgui.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lua\lua\lapi.h" />
+    <ClInclude Include="..\lua\lua\lauxlib.h" />
+    <ClInclude Include="..\lua\lua\lcode.h" />
+    <ClInclude Include="..\lua\lua\ldebug.h" />
+    <ClInclude Include="..\lua\lua\ldo.h" />
+    <ClInclude Include="..\lua\lua\lfunc.h" />
+    <ClInclude Include="..\lua\lua\lgc.h" />
+    <ClInclude Include="..\lua\lua\llex.h" />
+    <ClInclude Include="..\lua\lua\llimits.h" />
+    <ClInclude Include="..\lua\lua\lmem.h" />
+    <ClInclude Include="..\lua\lua\lobject.h" />
+    <ClInclude Include="..\lua\lua\lopcodes.h" />
+    <ClInclude Include="..\lua\lua\lparser.h" />
+    <ClInclude Include="..\lua\lua\lstate.h" />
+    <ClInclude Include="..\lua\lua\lstring.h" />
+    <ClInclude Include="..\lua\lua\ltable.h" />
+    <ClInclude Include="..\lua\lua\ltm.h" />
+    <ClInclude Include="..\lua\lua\lua.h" />
+    <ClInclude Include="..\lua\lua\luaconf.h" />
+    <ClInclude Include="..\lua\lua\lualib.h" />
+    <ClInclude Include="..\lua\lua\lundump.h" />
+    <ClInclude Include="..\lua\lua\lvm.h" />
+    <ClInclude Include="..\lua\lua\lwops.h" />
+    <ClInclude Include="..\lua\lua\lzio.h" />
+    <ClInclude Include="console.h" />
+    <ClInclude Include="d3d11hook.h" />
+    <ClInclude Include="dump.h" />
+    <ClInclude Include="dumpWindow.h" />
+    <ClInclude Include="hookManager.h" />
+    <ClInclude Include="hud.h" />
+    <ClInclude Include="ImGui\imconfig.h" />
+    <ClInclude Include="ImGui\imgui.h" />
+    <ClInclude Include="ImGui\imgui_internal.h" />
+    <ClInclude Include="ImGui\imstb_rectpack.h" />
+    <ClInclude Include="ImGui\imstb_textedit.h" />
+    <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="ImGui\stb_rect_pack.h" />
+    <ClInclude Include="ImGui\stb_textedit.h" />
+    <ClInclude Include="ImGui\stb_truetype.h" />
+    <ClInclude Include="imgui_impl_dx11.h" />
+    <ClInclude Include="InputHook.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="luaHooks.h" />
+    <ClInclude Include="luaImplAssist.h" />
+    <ClInclude Include="luaInit.h" />
+    <ClInclude Include="luaLoader.h" />
+    <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="Warframe.x64.exe.h" />
+    <ClInclude Include="warframeHook.h" />
+    <ClInclude Include="winUtils.h" />
+    <ClInclude Include="win_imgui.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="luaImpl.asm">
+      <FileType>Document</FileType>
+    </MASM>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>
