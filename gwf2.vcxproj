@@ -197,6 +197,7 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="imgui_imp_dx11.cpp" />
     <ClCompile Include="InputHook.cpp" />
+    <ClCompile Include="luaExports.cpp" />
     <ClCompile Include="luaHooks.cpp" />
     <ClCompile Include="luaImplAssist.cpp" />
     <ClCompile Include="luaInit.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="imgui_impl_dx11.h" />
     <ClInclude Include="InputHook.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="luaExports.h" />
     <ClInclude Include="luaHooks.h" />
     <ClInclude Include="luaImplAssist.h" />
     <ClInclude Include="luaInit.h" />

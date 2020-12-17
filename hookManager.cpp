@@ -15,6 +15,7 @@ void* HookManager::setupHook(hookConfig hookData) {
 	}
 
 	fprintf(console->fpout, "Setup hook: %s %s\n", hookData.debugName.c_str(), funcPtr ? "Success" : "Fail");
+	fflush(console->fpout);
 
 	return funcPtr;
 }
