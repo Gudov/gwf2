@@ -1,6 +1,7 @@
 #include "luaLoader.h"
 #include <string>
 #include "luaImplAssist.h"
+#include "hookUtils.h"
 
 extern "C" {
 #include <lua/lauxlib.h>
@@ -48,11 +49,18 @@ static lua_State* getLoadState() {
     return loadState;
 }
 
+EXTERN_C_START
+const char* getS(lua_State* L, void* ud, size_t* size);
+void luaS_resize(lua_State* L, int newsize);
+EXTERN_C_END
+
 bool loadLuaScriptFromString(lua_State* L, char* str, size_t sz, const char *name) {
-	lua_State* loadState = getLoadState();
+	/*lua_State* loadState = getLoadState();
 	int loadError = luaL_loadbuffer(loadState, str, sz, name);
     
     if (loadError) {
+        const char *str = lua_tostring(L, -1);
+        printf("\n%s\n", str);
         lua_pop(loadState, 1);
         return false;
     }
@@ -66,13 +74,23 @@ bool loadLuaScriptFromString(lua_State* L, char* str, size_t sz, const char *nam
 	size_t dumpSize;
 	const char *dump = lua_tolstring(loadState, -1, &dumpSize);
 
+    FILE* fout = fopen("C:\\war3\\compiled.c", "wb");
+    fwrite(dump, 1, dumpSize, fout);
+    fclose(fout);
+
     LoadS loadS;
     loadS.s = (uint8_t*)dump;
     loadS.size = dumpSize;
     loadS.remain = 0;
-    loadError = lua_load_implementation(L, (long long)warframeReader, &loadS, name);
+    loadError = FnCast("lua_load", lua_load_original)(L, warframeReader, (rawLuaData*)&loadS, name);*/
+    static bool stateReady = false;
+    if (!stateReady) {
+        stateReady = true;
+        luaX_init(L);
+    }
 
-    lua_pop(loadState, 2);
-
-    return loadError == 0;
+    LoadS ls;
+    ls.s = (uint8_t*)str;
+    ls.size = sz;
+    return lua_load(L, getS, &ls, name) == 0;
 }

@@ -18,6 +18,10 @@
 
 #include "mainMenu.h"
 #include "dumpWindow.h"
+#include "protoList.h"
+#include "protoEditor.h"
+#include "executeWindow.h"
+#include "resourceWindow.h"
 
 #pragma comment(lib, "d3d11.lib")
 
@@ -74,6 +78,20 @@ D3D11_HOOK_API void ImplHookDX11_Present(ID3D11Device* device, ID3D11DeviceConte
 		if (GUI::isDumpWindow()) {
 			GUI::DumpWindow::draw();
 		}
+
+		if (GUI::isProtoListWindow()) {
+			GUI::ProtoList::draw();
+		}
+
+		if (GUI::isResourceWindow()) {
+			GUI::Resource::draw();
+		}
+
+		if (GUI::isExecuteWindow()) {
+			GUI::ExecuteWindow::draw();
+		}
+
+		GUI::ProtoEditor::drawAll();
 	}
 	
 	ImGui::Render();
@@ -184,7 +202,6 @@ DWORD __stdcall HookDX11_Init()
 	pDeviceContextVTable = (DWORD_PTR*)(g_pd3dContext);
 	pDeviceContextVTable = (DWORD_PTR*)(pDeviceContextVTable[0]);
 
-	if (MH_Initialize() != MH_OK) { return 1; }
 	if (MH_CreateHook((DWORD_PTR*)pSwapChainVTable[8], PresentHook, reinterpret_cast<void**>(&phookD3D11Present)) != MH_OK) { return 1; }
 	if (MH_EnableHook((DWORD_PTR*)pSwapChainVTable[8]) != MH_OK) { return 1; }
 	if (MH_CreateHook((DWORD_PTR*)pDeviceContextVTable[12], DrawIndexedHook, reinterpret_cast<void**>(&phookD3D11DrawIndexed)) != MH_OK) { return 1; }

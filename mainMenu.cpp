@@ -1,8 +1,10 @@
 #include "mainMenu.h"
 #include "luaHooks.h"
 #include "luaInit.h"
+#include "strUtils.h"
 
 #include <imgui.h>
+#include <unordered_map>
 
 namespace GUI {
 	bool inputFullCaptureEnabled = false;
@@ -10,6 +12,15 @@ namespace GUI {
 
 	bool demoWindow = false;
 	bool dumpWindow = false;
+	bool protoListWindow = false;
+	bool executeWindow = false;
+	bool resourceWindow = false;
+
+	std::unordered_map<std::string, bool*> options;
+}
+
+bool GUI::isExecuteWindow() {
+	return executeWindow;
 }
 
 bool GUI::isInputFullCapture() {
@@ -33,6 +44,14 @@ bool GUI::isDemoWindow() {
 
 bool GUI::isDumpWindow() {
 	return dumpWindow;
+}
+
+bool GUI::isProtoListWindow() {
+	return protoListWindow;
+}
+
+bool GUI::isResourceWindow() {
+	return resourceWindow;
 }
 
 void GUI::setupStyle() {
@@ -140,13 +159,25 @@ void GUI::overlayMenu() {
 
 			if (ImGui::BeginMenu("Core")) {
 				ImGui::MenuItem("Dump window", NULL, &dumpWindow);
+				ImGui::MenuItem("Execute window", NULL, &executeWindow);
+				ImGui::MenuItem("Resource window", NULL, &resourceWindow);
 
 				ImGui::EndMenu();
 			}
 
 			if (ImGui::BeginMenu("Gui")) {
 				ImGui::MenuItem("Demo Window", NULL, &demoWindow);
+				ImGui::MenuItem("Proto list Window", NULL, &protoListWindow);
 				ImGui::MenuItem("Draw cursor", NULL, &(ImGui::GetIO().MouseDrawCursor));
+				ImGui::MenuItem("Keyboard override", NULL, &inputFullCaptureEnabled);
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("lua")) {
+				for (auto &state : options) {
+					ImGui::MenuItem(state.first.c_str(), NULL, state.second);
+				}
 
 				ImGui::EndMenu();
 			}
@@ -163,7 +194,29 @@ void GUI::overlayMenu() {
 			ImGui::EndPopup();
 		}
 		ImGui::Text("hook tps:%d", getWarframeTickFps());
-		ImGui::Text("%s", getTickMsg());
+		
+		auto lines = strSplit(getTickMsg(), "\n");
+
+		for (auto line : lines) {
+			ImGui::Text("%s", line);
+		}
 	}
 	ImGui::End();
+}
+
+bool GUI::getOptionStatus(std::string name) {
+	auto state = options.find(name);
+	if (state == options.end()) {
+		return false;
+	}
+	return *((*state).second);
+}
+
+void GUI::addOption(std::string name) {
+	auto state = options.find(name);
+	if (state == options.end()) {
+		bool* val = new bool;
+		*val = false;
+		options[name] = val;
+	}
 }

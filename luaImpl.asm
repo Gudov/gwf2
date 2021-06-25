@@ -26,13 +26,14 @@ _TEXT SEGMENT
 		mov     r11, rsp
 		mov     [r11+10h], rbx
 		mov     [r11+18h], rbp
-		mov     [r11+20h], rsi
+		push    rsi
 		push    rdi
+		push    r14
 		sub     rsp, 80h
-		mov     rbp, rcx
+		mov     r14, rcx
 
 		mov		rax, qword ptr lua_load_original
-		add		rax, 17h
+		add		rax, 16h
 		jmp		rax
 	lua_load_implementation ENDP
 

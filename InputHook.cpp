@@ -33,89 +33,51 @@ void InputHook::Remove(HWND hWindow)
 
 LRESULT APIENTRY WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (GUI::isMouseEnabled() && !GUI::isInputFullCapture()) {
-		switch (uMsg)
-		{
-		case WM_LBUTTONDOWN:
-			GetIO().MouseDown[0] = true;
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		case WM_LBUTTONUP:
-			GetIO().MouseDown[0] = false;
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		case WM_RBUTTONDOWN:
-			GetIO().MouseDown[1] = true;
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		case WM_RBUTTONUP:
-			GetIO().MouseDown[1] = false;
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		case WM_MBUTTONDOWN:
-			GetIO().MouseDown[2] = true;
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		case WM_MBUTTONUP:
-			GetIO().MouseDown[2] = false;
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		case WM_MOUSEWHEEL:
-			GetIO().MouseWheel += GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? +1.0f : -1.0f;
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		case WM_MOUSEMOVE:
-			GetIO().MousePos.x = (signed short)(lParam); GetIO().MousePos.y = (signed short)(lParam >> 16);
-			if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-			break;
-		}
-
-		return CallWindowProc(oWndProc, hwnd, uMsg, wParam, lParam);
-	}
-
-	if (!GUI::isMouseEnabled()) {
-		return CallWindowProc(oWndProc, hwnd, uMsg, wParam, lParam);
-	}
-
+	bool keyboardOverride = GUI::isInputFullCapture();
+	ImGuiIO& io = ImGui::GetIO();
 	switch (uMsg)
 	{
-	case WM_KEYDOWN:
-		GetIO().AddInputCharacter(wParam);
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-		break;
-	case WM_KEYUP:
-		break;
 	case WM_LBUTTONDOWN:
-		GetIO().MouseDown[0] = true; 
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
+		GetIO().MouseDown[0] = true;
 		break;
 	case WM_LBUTTONUP:
 		GetIO().MouseDown[0] = false;
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
 		break;
 	case WM_RBUTTONDOWN:
 		GetIO().MouseDown[1] = true;
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
 		break;
 	case WM_RBUTTONUP:
 		GetIO().MouseDown[1] = false;
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
 		break;
 	case WM_MBUTTONDOWN:
 		GetIO().MouseDown[2] = true;
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
 		break;
 	case WM_MBUTTONUP:
 		GetIO().MouseDown[2] = false;
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
 		break;
 	case WM_MOUSEWHEEL:
 		GetIO().MouseWheel += GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? +1.0f : -1.0f;
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
 		break;
 	case WM_MOUSEMOVE:
 		GetIO().MousePos.x = (signed short)(lParam); GetIO().MousePos.y = (signed short)(lParam >> 16);
-		if (GUI::isInputFullCapture()) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
+		break;
+	case WM_KEYDOWN:
+	case WM_SYSKEYDOWN:
+		if (wParam < 256)
+			io.KeysDown[wParam] = 1;
+		if (keyboardOverride) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
+		break;
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		if (wParam < 256)
+			io.KeysDown[wParam] = 0;
+		if (keyboardOverride) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
+		break;
+	case WM_CHAR:
+		// You can also use ToAscii()+GetKeyboardState() to retrieve characters.
+		if (wParam > 0 && wParam < 0x10000)
+			io.AddInputCharacter((unsigned short)wParam);
+		if (keyboardOverride) { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
 		break;
 	}
 

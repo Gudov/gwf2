@@ -29,7 +29,7 @@ __int64 __fastcall warframe_moveOrCopyStr_hook(char* a1, char* a2) {
 		char* discordBegin = strstr(ch, ",\"DiscordId\":");
 		if (discordBegin != nullptr) {
 			discordBegin[15] = '8';
-			discordBegin[16] = '9';
+			discordBegin[16] = '3';
 			discordBegin[17] = '7';
 		}
 	}

@@ -87,8 +87,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\src\warframe\lua;C:\src\warframe\gwf2\ImGui;C:\src\warframe\gwf2\MinHook\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\src\warframe\gwf2\MinHook\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\src\warframe\lua;$(SolutionDir)ImGui;$(SolutionDir)MinHook\include;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)MinHook\lib;$(SolutionDir)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,14 +141,16 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <Optimization>Disabled</Optimization>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libMinHook-x64-v140-mdd.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;imm32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libMinHook-x64-v140-mdd.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;imm32.lib;asmjit.lib;capstone.lib;PolyHook_2.lib;Zycore.lib;Zydis.lib;Urlmon.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -185,11 +187,14 @@
     <ClCompile Include="..\lua\lua\lwops.c" />
     <ClCompile Include="..\lua\lua\lzio.c" />
     <ClCompile Include="..\lua\lua\print.c" />
+    <ClCompile Include="bytecodeParser.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="d3d11hook.cpp" />
     <ClCompile Include="dump.cpp" />
     <ClCompile Include="dumpWindow.cpp" />
+    <ClCompile Include="executeWindow.cpp" />
     <ClCompile Include="hookManager.cpp" />
+    <ClCompile Include="hookUtils.cpp" />
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
@@ -198,13 +203,25 @@
     <ClCompile Include="imgui_imp_dx11.cpp" />
     <ClCompile Include="InputHook.cpp" />
     <ClCompile Include="luaExports.cpp" />
-    <ClCompile Include="luaHooks.cpp" />
+    <ClCompile Include="luaHooks.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="luaHooksL2.cpp" />
     <ClCompile Include="luaImplAssist.cpp" />
     <ClCompile Include="luaInit.cpp" />
     <ClCompile Include="luaLoader.cpp" />
+    <ClCompile Include="luaUtils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainMenu.cpp" />
-    <ClCompile Include="warframeHook.cpp" />
+    <ClCompile Include="protoList.cpp" />
+    <ClCompile Include="protoEditor.cpp" />
+    <ClCompile Include="protoManager.cpp" />
+    <ClCompile Include="resourceWindow.cpp" />
+    <ClCompile Include="strUtils.cpp" />
+    <ClCompile Include="warframeHook.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="warframeHookL2.cpp" />
     <ClCompile Include="winUtils.cpp" />
     <ClCompile Include="win_imgui.cpp" />
   </ItemGroup>
@@ -233,11 +250,14 @@
     <ClInclude Include="..\lua\lua\lvm.h" />
     <ClInclude Include="..\lua\lua\lwops.h" />
     <ClInclude Include="..\lua\lua\lzio.h" />
+    <ClInclude Include="bytecodeParser.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="d3d11hook.h" />
     <ClInclude Include="dump.h" />
     <ClInclude Include="dumpWindow.h" />
+    <ClInclude Include="executeWindow.h" />
     <ClInclude Include="hookManager.h" />
+    <ClInclude Include="hookUtils.h" />
     <ClInclude Include="hud.h" />
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
@@ -253,12 +273,20 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="luaExports.h" />
     <ClInclude Include="luaHooks.h" />
+    <ClInclude Include="luaHooksL2.h" />
     <ClInclude Include="luaImplAssist.h" />
     <ClInclude Include="luaInit.h" />
     <ClInclude Include="luaLoader.h" />
+    <ClInclude Include="luaUtils.h" />
     <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="protoList.h" />
+    <ClInclude Include="protoEditor.h" />
+    <ClInclude Include="protoManager.h" />
+    <ClInclude Include="resourceWindow.h" />
+    <ClInclude Include="strUtils.h" />
     <ClInclude Include="Warframe.x64.exe.h" />
     <ClInclude Include="warframeHook.h" />
+    <ClInclude Include="warframeHookL2.h" />
     <ClInclude Include="winUtils.h" />
     <ClInclude Include="win_imgui.h" />
   </ItemGroup>

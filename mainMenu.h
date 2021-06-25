@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace GUI {
 	bool isInputFullCapture();
 	void setInputFullCapture(bool enable);
@@ -9,8 +11,14 @@ namespace GUI {
 
 	bool isDemoWindow();
 	bool isDumpWindow();
+	bool isProtoListWindow();
+	bool isExecuteWindow();
+	bool isResourceWindow();
 
 	void setupStyle();
 
 	void overlayMenu();
+
+	bool getOptionStatus(std::string name);
+	void addOption(std::string name);
 };

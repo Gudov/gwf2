@@ -74,7 +74,7 @@ void DumpManger::clear() {
 	delete oldRoot;
 }
 
-void DumpManger::addData(std::string strPath, std::string name, uint8_t* data, size_t size) {
+void DumpManger::addData(std::string strPath, std::string name, uint8_t* data, size_t size, Proto *p) {
 	vector<string> path = strSplit(strPath, "/");
 
 	DumpedData* folder = getOrCreateFolder(path);
@@ -85,7 +85,7 @@ void DumpManger::addData(std::string strPath, std::string name, uint8_t* data, s
 
 	uint8_t* dataCopy = new uint8_t[size];
 	memcpy(dataCopy, data, size);
-	map[name] = createFile(dataCopy, size);
+	map[name] = createFile(strPath, name, dataCopy, size, p);
 }
 
 void DumpManger::saveFile(std::string path, std::string name, DumpedData* file) {
@@ -96,7 +96,7 @@ void DumpManger::saveFile(std::string path, std::string name, DumpedData* file) 
 	sprintf(full_path, "%s\\%s", path.c_str(), name.c_str());
 	FILE* f = fopen(full_path, "wb");
 	auto bin = std::get<DumpedData::File>(file->data);
-	fwrite(bin.first, bin.second, 1, f);
+	fwrite(bin.data, bin.len, 1, f);
 	fclose(f);
 }
 
@@ -125,10 +125,17 @@ void DumpManger::setFolder(std::string path) {
 	dumpPath = path;
 }
 
-DumpedData* DumpManger::createFile(uint8_t* data, size_t size) {
+DumpedData* DumpManger::createFile(string path, string name, uint8_t* data, size_t size, Proto* p) {
 	DumpedData* folder = new DumpedData(false);
 	folder->isFolder = false;
-	folder->data = std::pair<uint8_t*, size_t>(data, size);
+	DumpedData::File file;
+	file.data = data;
+	file.len = size;
+	file.name = name;
+	file.path = path;
+	file.p = p;
+	folder->data = file;
+
 	return folder;
 }
 
@@ -136,7 +143,7 @@ DumpedData* DumpManger::createFolder() {
 	DumpedData *folder = new DumpedData(true);
 	folder->isFolder = true;
 	folder->data = DumpedData::Map();
-	return folder;
+	return folder; 
 }
 
 DumpedData::DumpedData(bool isFolder) {
@@ -151,8 +158,8 @@ DumpedData::~DumpedData() {
 				delete v.second;
 			}
 		} else {
-			auto pair = std::get<std::pair<uint8_t*, size_t>>(data);
-			delete pair.first;
+			auto file = std::get<DumpedData::File>(data);
+			delete file.data;
 		}
 	}
 	catch (const std::bad_variant_access&) {}

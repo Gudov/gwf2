@@ -2,12 +2,7 @@
 #include <imgui.h>
 #include "dump.h"
 #include <functional>
-
-namespace GUI {
-	namespace DrawWindow {
-		
-	}
-}
+#include "protoEditor.h"
 
 using namespace GUI;
 
@@ -29,7 +24,11 @@ void DumpWindow::drawMenuBar() {
 
 static void drawFile(DumpedData* folder, std::string name) {
 	if (ImGui::BeginMenu(name.c_str())) {
-		ImGui::MenuItem("save");
+		if (ImGui::MenuItem("new master")) {
+			auto file = std::get<DumpedData::File>(folder->data);
+			new ProtoEditor(file.path, file.name, file.p);
+		}
+
 		ImGui::EndMenu();
 	}
 }
@@ -66,4 +65,5 @@ void DumpWindow::draw() {
 		drawMenuBar();
 		drawFiles();
 	}
+	ImGui::End();
 }
